@@ -23,13 +23,20 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+## Things to do or improve
+
+- [ ] Set queries in the URL
+- [ ] Improve performance (re rendering)
+- [ ] Tests
+- [ ] Pagination
+
 ## Resources
 
 About generate the typings for queries
 
 - [TypeScript GraphQL Code Generator – Generate GraphQL Types with Apollo Codegen Tutorial](https://www.apollographql.com/blog/typescript-graphql-code-generator-generate-graphql-types-with-apollo-codegen-tutorial/)
 
-For pagination (this is a TODO)
+For pagination (this is a nice to have)
 
 - [GraphQL Cursor Connections Specification](https://relay.dev/graphql/connections.htm)
 - [Bi-Directional Cursor Pagination with React.js, Relay, and GraphQL](https://www.christopherbonhage.com/software/2017/05/26/bidirectional-pagination-with-relay.html)

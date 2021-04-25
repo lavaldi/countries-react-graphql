@@ -1,37 +1,79 @@
-import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
-import { countries as CountriesData } from "../../../queries/__generated__/countries";
+import { Countries } from "../../../queries/__generated__/countries";
 import { COUNTRIES } from "../../../queries/countries";
-import SearchInput from "./search-input";
 
-const List = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const { data, loading, error } = useQuery<CountriesData>(COUNTRIES);
+type ListProps = {
+  searchQuery: string;
+  currencyQuery: string;
+  languageQuery: string;
+  regionQuery: string;
+}
 
-  if (error) return <span>Something went wrong :(</span>;
-  if(loading) return <span>Loading...</span>
+const List = ({
+  searchQuery,
+  currencyQuery,
+  languageQuery,
+  regionQuery,
+}: ListProps) => {
+  const { data, loading, error } = useQuery<Countries>(COUNTRIES);
+
+  if (error) return <div>Something went wrong :(</div>;
+  if (loading) return <div>Loading...</div>;
   if (!data || !data.countries?.edges)
-    return <span>There are no countries to show</span>;
+    return <div>There are no countries to show</div>;
 
   const countries = data.countries?.edges;
 
-  const filteredList = searchQuery
-    ? countries.filter((country) =>
-        country
-          ? country.node?.name.toLowerCase().includes(searchQuery.toLowerCase()) || country.node?.alpha2Code === searchQuery.toUpperCase()
-          : false
-      )
-    : countries;
+  const getFilteredList = () => {
+    const filteredByNameOrAlpha2Code = searchQuery.trim() ? countries.filter((country) =>
+      country
+        ? country.node?.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          country.node?.alpha2Code === searchQuery.toUpperCase()
+        : false
+    ) : countries;
+
+    const filteredByCurrency = currencyQuery
+      ? filteredByNameOrAlpha2Code.filter((country) =>
+          country
+            ? country.node?.currencies.edges.some((c) => c?.node?.code === currencyQuery)
+            : false
+        )
+      : filteredByNameOrAlpha2Code;
+
+    const filteredByLanguage = languageQuery
+      ? filteredByCurrency.filter((country) =>
+          country
+            ? country.node?.languages.edges.some(
+                (l) => l?.node?.iso6391 === languageQuery
+              )
+            : false
+        )
+      : filteredByCurrency;
+
+    const filteredByRegionalBlock = regionQuery
+      ? filteredByLanguage.filter((country) =>
+          country
+            ? country.node?.regionalBlocs.edges.some(
+                (r) => r?.node?.acronym === regionQuery
+              )
+            : false
+        )
+      : filteredByLanguage;
+
+    return filteredByRegionalBlock;
+  }
+
+  const filteredList = getFilteredList();
 
   return (
-    <>
-      <SearchInput
-        value={searchQuery}
-        onChange={(event) => setSearchQuery(event.target.value)}
-      />
-      <section className="flex flex-wrap items-start">
-        {filteredList.map((country) => (
+    <section className="flex flex-wrap items-start">
+      {filteredList.length === 0 ? (
+        <div>There are no results for your search</div>
+      ) : (
+        filteredList.map((country) => (
           <article key={country?.node?.id} className="w-1/3 flex-shrink-0">
             <Link to={`/${country?.node?.id}`}>
               <section className="shadow bg-white rounded-md relative flex flex-col space-y-3 py-3 px-5 divide-y divide-neutral-200 mb-10 mr-3 hover:shadow-md">
@@ -74,9 +116,9 @@ const List = () => {
               </section>
             </Link>
           </article>
-        ))}
-      </section>
-    </>
+        ))
+      )}
+    </section>
   );
 };
 

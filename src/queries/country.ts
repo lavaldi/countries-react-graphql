@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const COUNTRY = gql`
-  query country($id: ID!) {
+  query Country($id: ID!) {
     country(id: $id) {
       flag
       name

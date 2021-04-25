@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { COUNTRY } from "../../queries/country";
-import { country, countryVariables } from "../../queries/__generated__/country";
+import { Country as CountryData, CountryVariables } from "../../queries/__generated__/country";
 
 const Country = () => {
   const { countryId } = useParams<{ countryId: string }>();
-  const { data, loading, error } = useQuery<country, countryVariables>(
+  const { data, loading, error } = useQuery<CountryData, CountryVariables>(
     COUNTRY,
     {
       variables: {

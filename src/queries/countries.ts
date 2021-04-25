@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const COUNTRIES = gql`
-  query countries {
+  query Countries {
     countries {
       edges {
         node {
