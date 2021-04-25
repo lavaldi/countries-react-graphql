@@ -7,10 +7,6 @@ import useQueryParams from "../../../hooks/use-query-params";
 const List = () => {
   const { data, loading, error } = useQuery<Countries>(COUNTRIES);
   const query = useQueryParams();
-  const searchQuery = query.get("search") ?? "";
-  const currencyQuery = query.get("currency") ?? "";
-  const languageQuery = query.get("language") ?? "";
-  const regionQuery = query.get("region") ?? "";
 
   if (error) return <div>Something went wrong :(</div>;
   if (loading) return <div>Loading...</div>;
@@ -18,6 +14,10 @@ const List = () => {
     return <div>There are no countries to show</div>;
 
   const countries = data.countries?.edges;
+  const searchQuery = query.get("search") ?? "";
+  const currencyQuery = query.get("currency") ?? "";
+  const languageQuery = query.get("language") ?? "";
+  const regionQuery = query.get("region") ?? "";
 
   const getFilteredList = () => {
     const filteredByNameOrAlpha2Code = searchQuery.trim() ? countries.filter((country) =>

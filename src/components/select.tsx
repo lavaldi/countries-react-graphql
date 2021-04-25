@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 type SelectProps = {
   id: string;
@@ -17,11 +17,20 @@ const Select = ({
   selectedValue,
   onChange,
 }: SelectProps) => {
+
+  const [value, setValue] = useState(selectedValue);
+
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setValue(event.target.value);
     onChange(event);
   };
   return (
-    <select data-id={id} onChange={handleChange} value={selectedValue}>
+    <select
+      className="px-4 py-2 text-xs font-semibold border-2 border-gray-300 rounded text-gray-600 focus:outline-none focus:ring-1 focus:ring-gray-300"
+      data-id={id}
+      onChange={handleChange}
+      value={value}
+    >
       <option value="">{emptyOption}</option>
       {options &&
         options.map((option, index) => (
