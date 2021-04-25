@@ -26,17 +26,17 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Things to do or improve
 
 - [x] Set queries in the URL
-- [ ] Tests
+- [x] Some Tests
 - [ ] Improve performance (re rendering)
 - [ ] Clear filters
-- [ ] Filter list of selects according to search result
+- [ ] Filter select options according to search result
 - [ ] Pagination
 
 ## Resources
 
-About generate the typings for queries
-
 - [TypeScript GraphQL Code Generator – Generate GraphQL Types with Apollo Codegen Tutorial](https://www.apollographql.com/blog/typescript-graphql-code-generator-generate-graphql-types-with-apollo-codegen-tutorial/)
+- [React Router](https://testing-library.com/docs/example-react-router/)
+- [Mocking React Router’s match object in component unit tests](https://medium.com/@aarling/mocking-a-react-router-match-object-in-your-component-tests-fa95904dcc55)
 
 For pagination (this is a nice to have)
 

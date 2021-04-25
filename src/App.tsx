@@ -11,7 +11,7 @@ function App() {
           <Route path="/" exact>
             <CountriesList />
           </Route>
-          <Route path="/:countryId" exact>
+          <Route path="/country/:countryId" exact>
             <Country />
           </Route>
         </Switch>
