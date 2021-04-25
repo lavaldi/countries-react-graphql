@@ -1,21 +1,34 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { useHistory } from "react-router";
+import qs from 'query-string';
+import useQueryParams from '../../../hooks/use-query-params';
 
-type SearchInputProps = {
-  value: string;
-  onChange(event: ChangeEvent<HTMLInputElement>): void;
-}
+const SearchInput = () => {
+  const query = useQueryParams();
+  const { push } = useHistory();
+  const [searchQuery, setSearchQuery] = useState<string>(
+    query.get("search") ?? ""
+  );
 
-const SearchInput = ({value, onChange}: SearchInputProps) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+    const parsed = qs.parse(window.location.search);
+    const searchString = qs.stringify({...parsed, search: event.target.value}, { skipEmptyString: true });
+    push({
+      search: searchString,
+    });
+  }
+
   return (
     <div className="shadow flex">
       <input
-        className="w-full rounded p-2"
-        type="text"
+        className="w-full rounded p-2 focus:outline-none"
+        type="search"
         placeholder="Search by name or alpha2Code..."
-        value={value}
-        onChange={onChange}
+        value={searchQuery}
+        onChange={handleChange}
       />
-      <span className="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
+      <span className="flex justify-start items-center bg-white w-auto pr-2">
         <svg
           version="1.1"
           className="h-4 text-dark"

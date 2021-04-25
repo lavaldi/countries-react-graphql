@@ -1,19 +1,28 @@
 import { ChangeEvent } from 'react';
 
 type SelectProps = {
-  defaultOption: string;
+  id: string;
+  emptyOption: string;
+  selectedValue: string;
   options: any[] | undefined;
   keyValue: string;
-  onChange(value: string): void;
+  onChange(event: ChangeEvent<HTMLSelectElement>): void;
 };
 
-const Select = ({ options, keyValue, defaultOption, onChange }: SelectProps) => {
+const Select = ({
+  id,
+  options,
+  keyValue,
+  emptyOption,
+  selectedValue,
+  onChange,
+}: SelectProps) => {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onChange(event.target.value);
+    onChange(event);
   };
   return (
-    <select onChange={handleChange}>
-      <option value="">{defaultOption}</option>
+    <select data-id={id} onChange={handleChange} value={selectedValue}>
+      <option value="">{emptyOption}</option>
       {options &&
         options.map((option, index) => (
           <option key={index} value={option.node[keyValue]}>

@@ -2,21 +2,15 @@ import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { Countries } from "../../../queries/__generated__/countries";
 import { COUNTRIES } from "../../../queries/countries";
+import useQueryParams from "../../../hooks/use-query-params";
 
-type ListProps = {
-  searchQuery: string;
-  currencyQuery: string;
-  languageQuery: string;
-  regionQuery: string;
-}
-
-const List = ({
-  searchQuery,
-  currencyQuery,
-  languageQuery,
-  regionQuery,
-}: ListProps) => {
+const List = () => {
   const { data, loading, error } = useQuery<Countries>(COUNTRIES);
+  const query = useQueryParams();
+  const searchQuery = query.get("search") ?? "";
+  const currencyQuery = query.get("currency") ?? "";
+  const languageQuery = query.get("language") ?? "";
+  const regionQuery = query.get("region") ?? "";
 
   if (error) return <div>Something went wrong :(</div>;
   if (loading) return <div>Loading...</div>;
@@ -74,7 +68,7 @@ const List = ({
         <div>There are no results for your search</div>
       ) : (
         filteredList.map((country) => (
-          <article key={country?.node?.id} className="w-1/3 flex-shrink-0">
+          <article key={country?.node?.id} className="lg:w-1/3 flex-shrink-0 w-full">
             <Link to={`/${country?.node?.id}`}>
               <section className="shadow bg-white rounded-md relative flex flex-col space-y-3 py-3 px-5 divide-y divide-neutral-200 mb-10 mr-3 hover:shadow-md">
                 <div className="flex space-x-2">

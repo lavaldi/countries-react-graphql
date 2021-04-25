@@ -25,9 +25,11 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Things to do or improve
 
-- [ ] Set queries in the URL
+- [x] Set queries in the URL
 - [ ] Improve performance (re rendering)
 - [ ] Tests
+- [ ] Clear filters
+- [ ] Filter list of selects according to search result
 - [ ] Pagination
 
 ## Resources
