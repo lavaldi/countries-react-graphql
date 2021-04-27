@@ -1,7 +1,7 @@
 import { ComponentType } from "react";
 import { render } from "@testing-library/react";
 import { Router, Route } from "react-router-dom";
-import { createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 
 export function renderWithRouter(
   ui: ComponentType,
@@ -9,6 +9,10 @@ export function renderWithRouter(
     path = "/",
     route = "/",
     history = createMemoryHistory({ initialEntries: [route] }),
+  }: {
+    path?: string;
+    route?: string;
+    history?: MemoryHistory<unknown>;
   } = {}
 ) {
   return {
