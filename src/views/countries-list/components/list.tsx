@@ -69,7 +69,7 @@ const List = () => {
       ) : (
         filteredList.map((country) => (
           <article key={country?.node?.id} className="lg:w-1/3 flex-shrink-0 w-full">
-            <Link to={`/${country?.node?.id}`}>
+            <Link to={`/country/${country?.node?.id}`}>
               <section className="shadow bg-white rounded-md relative flex flex-col space-y-3 py-3 px-5 divide-y divide-neutral-200 mb-10 mr-3 hover:shadow-md">
                 <div className="flex space-x-2">
                   <img
